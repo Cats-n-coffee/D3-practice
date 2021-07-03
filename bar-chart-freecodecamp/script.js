@@ -57,7 +57,7 @@ async function draw() {
         .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
         .attr('y', d => yScale(yAccessor(d[1]))) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
         .attr('width', 6)
-        .attr('height', d => yAccessor(d[1]) / 16)
+        .attr('height', d => dimensions.containerHeight - (yScale(yAccessor(d[1])))) // find height by subtracting y value from height of the chart
         .attr('fill', '#325ecf')
 
     const xAxis = d3.axisBottom(xScale)
@@ -65,7 +65,7 @@ async function draw() {
 
     const xAxisGroup = container.append('g')
         .call(xAxis)
-        .style('transform', `translateY(${dimensions.containerHeight + 20}px)`)
+        .style('transform', `translateY(${dimensions.containerHeight}px)`)
 
     const yAxis = d3.axisLeft(yScale)
         .ticks(15)

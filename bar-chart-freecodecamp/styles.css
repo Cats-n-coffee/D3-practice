@@ -2,12 +2,15 @@ body {
     background: rgb(253, 246, 246);
 }
 
-/* svg g {
-    overflow: hidden;
-} */
+#chart {
+    width: 800px;
+    height: 700px;
+    position: relative;
+    margin: auto;
+}
 
-.group {
+/* .group {
     width: 720px;
     height: 620px;
     overflow: hidden;
-}
+} */
