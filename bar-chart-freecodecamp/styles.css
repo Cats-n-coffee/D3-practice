@@ -1,5 +1,6 @@
 body {
     background: rgb(253, 246, 246);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #chart {
@@ -7,10 +8,25 @@ body {
     height: 700px;
     position: relative;
     margin: auto;
+    position: relative;
 }
 
-/* .group {
-    width: 720px;
-    height: 620px;
-    overflow: hidden;
-} */
+h1 {
+    text-align: center;
+}
+
+.legends {
+    font-size: 1rem;
+    color: rgb(109, 108, 108);
+}
+
+#tooltip{
+    position: absolute;
+    width: 120px;
+    font-size: .8rem;
+    padding: .6em;
+    background: white;
+    border: 1px black solid;
+    display: none;
+    line-height: 1.2rem;
+}
