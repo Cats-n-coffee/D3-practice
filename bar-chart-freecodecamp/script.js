@@ -46,6 +46,9 @@ async function draw() {
         .attr('height', dimensions.height) // set the svg height
     
     const container = svg.append('g') // append a 'g' to the svg
+        .classed('group', true)    
+        .attr('width', dimensions.containerWidth)
+        .attr('height', dimensions.containerHeight)    
         .attr('transform', `translate(${dimensions.margin}, ${dimensions.margin})`)
 
     container.selectAll('rect') // this line will keep the 'rect' inside the 'g'
@@ -54,8 +57,23 @@ async function draw() {
         .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
         .attr('y', d => yScale(yAccessor(d[1]))) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
         .attr('width', 6)
-        .attr('height', d => yAccessor(d[1]) / 4)
+        .attr('height', d => yAccessor(d[1]) / 16)
         .attr('fill', '#325ecf')
+
+    const xAxis = d3.axisBottom(xScale)
+        .ticks(10)
+
+    const xAxisGroup = container.append('g')
+        .call(xAxis)
+        .style('transform', `translateY(${dimensions.containerHeight + 20}px)`)
+
+    const yAxis = d3.axisLeft(yScale)
+        .ticks(15)
+
+    const yAxisGroup = container.append('g')
+        .call(yAxis)
+        
+
 }
 
 draw()

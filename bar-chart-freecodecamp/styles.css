@@ -1,3 +1,13 @@
 body {
     background: rgb(253, 246, 246);
 }
+
+/* svg g {
+    overflow: hidden;
+} */
+
+.group {
+    width: 720px;
+    height: 620px;
+    overflow: hidden;
+}
