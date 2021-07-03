@@ -53,21 +53,27 @@ async function draw() {
     // Tooltip
     const tooltip = d3.select('#tooltip')
 
+    //const enterTransition = d3.transition().duration(500);
+
     container.selectAll('rect') // this line will keep the 'rect' inside the 'g'
         .data(newDataset) // bind elements to the data
-        .join('rect') // with only one string specified, it returns the enter selection, equivalent to append
-        .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
-        .attr('y', d => yScale(yAccessorBin(d))) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
-        .attr('width', 9)
-        .attr('height', d => dimensions.containerHeight - (yScale(yAccessorBin(d)))) // find height by subtracting y value from height of the chart
-        .attr('fill', '#1576b3')
-        .attr('data-year', d => `${d.x0}-${d.x1}`)
-        .attr('data-gdp', d => yAccessorBin(d).toFixed(2))
+        .join(// with only one string specified, it returns the enter selection, equivalent to append
+            enter => enter.append('rect')
+                .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
+                .attr('y', dimensions.containerHeight) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
+                .attr('width', 9)
+                .attr('height', 0) // find height by subtracting y value from height of the chart
+                .attr('fill', '#1576b3')
+                .attr('data-year', d => `${d.x0}-${d.x1}`)
+                .attr('data-gdp', d => yAccessorBin(d).toFixed(2))
+        ) 
         .on('mouseenter', function(event, datum) {
+            d3.select(this)
+                .attr('fill', '#fc9608')
 
             tooltip.style('display', 'block')
                 .style('top', yScale(yAccessorBin(datum))+ 50 + 'px')
-                .style('left', xScale((datum.x0 + datum.x1) / 2) + 'px')
+                .style('left', xScale((datum.x0 + datum.x1) / 2) + 90 + 'px')
 
             tooltip.select('.tooltip-years span')
                 .text(`${datum.x0}-${datum.x1}`)
@@ -75,9 +81,25 @@ async function draw() {
             tooltip.select('.tooltip-gdp span')
                 .text(yAccessorBin(datum).toFixed(2))
         })
+        .on('mouseleave', function(event, datum) {
+            d3.select(this)
+                .attr('fill', '#1576b3')
+            tooltip.style('display', 'none')
+        })
+        .transition()
+        .duration(1000)
+        .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
+        .attr('y', d => yScale(yAccessorBin(d))) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
+        .attr('width', 9)
+        .attr('height', d => dimensions.containerHeight - (yScale(yAccessorBin(d)))) // find height by subtracting y value from height of the chart
+        .attr('fill', '#1576b3')
+        .attr('data-year', d => `${d.x0}-${d.x1}`)
+        .attr('data-gdp', d => yAccessorBin(d).toFixed(2))
+        
 
     const xAxis = d3.axisBottom(xScale)
         .ticks(10)
+        .tickFormat(d => d)
 
     const xAxisGroup = container.append('g')
         .call(xAxis)
