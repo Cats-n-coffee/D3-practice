@@ -76,7 +76,7 @@ console.log(datum)
             tooltip.style('display', 'none')
         })
 
-
+    // Axes
     const xAxis = d3.axisBottom(xScale)
         .ticks(12)
         .tickFormat(d => d)
@@ -90,7 +90,7 @@ console.log(datum)
         .style('transform', `translateY(${dimensions.containerHeight}px)`)
 
     xAxisGroup.append('text')
-        .classed('legend', true)
+        .classed('axisLabel', true)
         .attr('x', dimensions.containerWidth / 2)
         .attr('y', dimensions.margin)
         .attr('fill', 'black')
@@ -100,12 +100,46 @@ console.log(datum)
         .call(yAxis)
 
     yAxisGroup.append('text')
-        .classed('legend', true)
+        .classed('axisLabel', true)
         .attr('x', -dimensions.containerHeight / 2 + dimensions.margin)
         .attr('y', -dimensions.margin)
         .style('transform', 'rotate(270deg)')
         .attr('fill', 'black')
         .text('Time in minutes')
+
+    // Legend
+    const legend = container.append('g')
+        .classed('legend', true)
+        .style('transform', 'translateX(500px)')
+    
+    const redLegend = legend.append('g')
+    redLegend.append('rect') // Red rectangle
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', 20)
+        .attr('height', 20)
+        .attr('fill', 'green')
+        .attr('stroke', 'grey')
+    redLegend.append('text') // Red legend text
+        .attr('x', 30)
+        .attr('y', 15)
+        .attr('fill', 'black')
+        .text('No doping allegations')
+
+    const greenLegend = legend.append('g')
+    greenLegend.append('rect') // Green rectangle
+        .attr('x', 0)
+        .attr('y', 25)
+        .attr('width', 20)
+        .attr('height', 20)
+        .attr('fill', 'red')
+        .attr('stroke', 'grey')
+    greenLegend.append('text') // Green legend text
+        .attr('x', 30)
+        .attr('y', 40)
+        .attr('fill', 'black')
+        .text('Doping allegations')
+
 
 }
 draw()

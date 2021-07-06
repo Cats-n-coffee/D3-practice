@@ -22,8 +22,17 @@ h1, h2 {
     border: 1px solid black;
     padding: .5em;
     z-index: 3;
+    font-size: .9rem;
 }
 
-.legend {
+#tooltip div {
+    font-weight: bold;
+}
+
+#tooltip div span {
+    font-weight: normal;
+}
+
+.axisLabel {
     font-size: .9rem;
 }
