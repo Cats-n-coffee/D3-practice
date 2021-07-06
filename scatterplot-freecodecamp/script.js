@@ -28,10 +28,12 @@ async function draw(){
     const svg = d3.select('#chart')
         .append('svg')
         .attr('width', dimensions.width)
-        .attr('height', dimensions.height)
+        .attr('height', dimensions.height);
 
     const container = svg.append('g')
-        .attr('transform', `translate(${dimensions.margin}, ${dimensions.margin})`)
+        .attr('transform', `translate(${dimensions.margin + 15}, ${dimensions.margin})`);
+
+    const tooltip = d3.select('#tooltip');
 
     // Draw the shapes
     container.selectAll('circle')
@@ -39,9 +41,41 @@ async function draw(){
         .join('circle')
         .attr('cx', d => xScale(xAccessor(d)))
         .attr('cy', d => yScale(yAccessor(d)))
-        .attr('r', 8)
-        .attr('fill', d => d.Doping === "" ? 'blue' : 'red')
-        .attr('stroke', 'black')
+        .attr('r', 9)
+        .attr('fill', d => d.Doping === "" ? 'green' : 'red')
+        .attr('stroke', 'grey')
+        .attr('data-color', d => d.Doping === "" ? 'green' : 'red')
+        .attr('data-year', d => xAccessor(d))
+        .attr('data-time', d => yAccessor(d))
+        .attr('data-doping', d => d.Doping)
+        .on('mouseenter', function(event, datum) {
+            d3.select(this)
+                .attr('fill', 'grey')
+console.log(datum)
+            tooltip.style('display', 'block')
+                .style('top', yScale(yAccessor(datum)) + 40 + 'px')
+                .style('left', xScale(xAccessor(datum)) + 60 + 'px')
+
+            tooltip.select('.tooltip-name span')
+                .text(datum.Name)
+
+            tooltip.select('.tooltip-year span')
+                .text(datum.Year)
+
+            tooltip.select('.tooltip-time span')
+                .text(datum.Time)
+
+            tooltip.select('.tooltip-doping span')
+                .text(datum.Doping === "" ? "No doping was reported" : datum.Doping)
+        })
+        .on('mouseleave', function(event, datum) {
+            d3.select(this)
+                .attr('fill', this.getAttribute("data-color") )
+                console.log(this.getAttribute("data-color"))
+            
+            tooltip.style('display', 'none')
+        })
+
 
     const xAxis = d3.axisBottom(xScale)
         .ticks(12)
@@ -55,8 +89,23 @@ async function draw(){
         .call(xAxis)
         .style('transform', `translateY(${dimensions.containerHeight}px)`)
 
+    xAxisGroup.append('text')
+        .classed('legend', true)
+        .attr('x', dimensions.containerWidth / 2)
+        .attr('y', dimensions.margin)
+        .attr('fill', 'black')
+        .text('Years')
+
     const yAxisGroup = container.append('g')
         .call(yAxis)
+
+    yAxisGroup.append('text')
+        .classed('legend', true)
+        .attr('x', -dimensions.containerHeight / 2 + dimensions.margin)
+        .attr('y', -dimensions.margin)
+        .style('transform', 'rotate(270deg)')
+        .attr('fill', 'black')
+        .text('Time in minutes')
 
 }
 draw()

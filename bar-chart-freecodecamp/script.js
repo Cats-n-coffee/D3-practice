@@ -58,7 +58,7 @@ async function draw() {
     container.selectAll('rect') // this line will keep the 'rect' inside the 'g'
         .data(newDataset) // bind elements to the data
         .join(// with only one string specified, it returns the enter selection, equivalent to append
-            enter => enter.append('rect')
+            enter => enter.append('rect') // BUT, here using the enter method because of the transition
                 .attr('x', d => xScale(d.x0)) // apply the scale to each item (d), and give it the accessor, which will target its specified field
                 .attr('y', dimensions.containerHeight) // example: current item(d), apply the yScale on item[1] (yAccessor(d))
                 .attr('width', 9)
