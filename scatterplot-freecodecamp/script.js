@@ -51,7 +51,7 @@ async function draw(){
         .on('mouseenter', function(event, datum) {
             d3.select(this)
                 .attr('fill', 'grey')
-console.log(datum)
+
             tooltip.style('display', 'block')
                 .style('top', yScale(yAccessor(datum)) + 40 + 'px')
                 .style('left', xScale(xAccessor(datum)) + 60 + 'px')
@@ -71,7 +71,6 @@ console.log(datum)
         .on('mouseleave', function(event, datum) {
             d3.select(this)
                 .attr('fill', this.getAttribute("data-color") )
-                console.log(this.getAttribute("data-color"))
             
             tooltip.style('display', 'none')
         })
