@@ -17,7 +17,7 @@ Considering the amount of data for the chart, we created 'bins' to gather all th
 When using bins, the yAccessor had to be redefined to better describe the data present in each bin (doing an average again).
 
 The bars were overflowing from the group element that was being stretched. The bottom axis was placed on top of the chart.
-Solution: corrected the height of the bars by subtracting y value from height of the chart.
+Solution: corrected the height of the bars by subtracting the y value from height of the chart.
 
 ## Scatterplot
 The same structure as the previous chart applies.

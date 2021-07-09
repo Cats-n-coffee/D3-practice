@@ -22,7 +22,7 @@ async function draw() {
     // Scales
     const colorScale = d3.scaleLinear() // or do we need scaleQuantize?
         .domain(d3.extent(dataset, accessor)) // --> Needs to maintain the original order of the set?
-        .range(d3.schemeRdBu[8])
+        .range(['blue', 'yellow', 'orange', 'red']) // d3.schemeRdBu[8]
 
     const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, yearAccessor))
@@ -48,8 +48,21 @@ async function draw() {
         .attr('height', 40)
         .attr('x', d => xScale(yearAccessor(d))) // calculate the position of the box
         .attr('y', d => yScale(monthAccessor(d))) // calculate the position of the box
-        .attr('fill', d => colorScale(d))
-}
+        .attr('fill', d => colorScale(accessor(d))) // remember to add the accessor for color scale as well
+
+    const xAxis = d3.axisBottom(xScale)
+        .ticks(20)
+        .tickFormat(d => d)
+    const xAxisGroup = container.append('g')
+        .call(xAxis)
+        .style('transform', `translateY(${dimensions.containerHeight}px)`)
+
+    const yAxis = d3.axisLeft(yScale)
+        .ticks(12)
+    const yAxisGroup = container.append('g')
+        .call(yAxis)
+
+}// https://ashlynnpai.github.io/journal/2018/02/14/heatmap-with-d3-v4.html
 
 draw();
 
