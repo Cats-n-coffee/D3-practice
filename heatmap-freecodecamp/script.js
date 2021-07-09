@@ -19,10 +19,12 @@ async function draw() {
     dimensions.containerWidth = dimensions.width - dimensions.margin * 2;
     dimensions.containerHeight = dimensions.height - dimensions.margin * 2;
 
+    let colorSchema = (d3.schemeRdYlBu[11]).reverse();
+
     // Scales
-    const colorScale = d3.scaleLinear() // or do we need scaleQuantize?
+    const colorScale = d3.scaleQuantize() // or do we need scaleQuantize?
         .domain(d3.extent(dataset, accessor)) // --> Needs to maintain the original order of the set?
-        .range(['blue', 'yellow', 'orange', 'red']) // d3.schemeRdBu[8]
+        .range(colorSchema) 
 
     const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, yearAccessor))
@@ -39,7 +41,7 @@ async function draw() {
         .attr('height', dimensions.height)
 
     const container = svg.append('g')
-        .style('transform', `translate(${dimensions.margin + 15}, ${dimensions.margin})`)
+        .attr('transform', `translate(${dimensions.margin + 15}, ${dimensions.margin})`);
 
     container.selectAll('rect')
         .data(dataset)
@@ -47,7 +49,7 @@ async function draw() {
         .attr('width', 4)
         .attr('height', 40)
         .attr('x', d => xScale(yearAccessor(d))) // calculate the position of the box
-        .attr('y', d => yScale(monthAccessor(d))) // calculate the position of the box
+        .attr('y', d => yScale(monthAccessor(d)) - 40) // calculate the position of the box
         .attr('fill', d => colorScale(accessor(d))) // remember to add the accessor for color scale as well
 
     const xAxis = d3.axisBottom(xScale)
@@ -57,8 +59,12 @@ async function draw() {
         .call(xAxis)
         .style('transform', `translateY(${dimensions.containerHeight}px)`)
 
+    const months = Array(12).fill(1).map((val, index) => new Date().setMonth(index));
     const yAxis = d3.axisLeft(yScale)
         .ticks(12)
+        
+        //.tickValues(months)
+        // .tickFormat(d3.timeFormat("%B"))
     const yAxisGroup = container.append('g')
         .call(yAxis)
 
