@@ -3,6 +3,22 @@ body {
     font-family:Arial, Helvetica, sans-serif;
 }
 
+h1, h2 {
+    text-align: center;
+}
+
 #chart {
     margin: 0 50px;
+    position: relative;
+}
+
+#tooltip {
+    position: absolute;
+    background: rgb(253, 216, 212);
+    padding: .5em;
+    border: 1px solid rgb(102, 102, 102);
+    border-radius: 5px;
+    font-size: .8rem;
+    display: none;
+    z-index: 3;
 }

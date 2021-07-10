@@ -10,6 +10,22 @@
 <body>
     <h1>Monthly Global Land-surface Temperatures</h1>
     <h2>From year 1753 to 2015 - Base temperature: 8.66 Celcius</h2>
+
+    <div id="tooltip">
+        <div class="tooltip-year">
+            Year: <span></span>
+        </div>
+        <div class="tooltip-month">
+            Month: <span></span>
+        </div>
+        <div class="tooltip-temp">
+            Temp: <span></span><span>&#8451;</span>
+        </div>
+        <div class="tooltip-variance">
+            Variance: <span></span>
+        </div>
+    </div>
+
     <div id="chart"></div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
