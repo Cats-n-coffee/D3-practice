@@ -33,3 +33,5 @@ The most challenging part was to figure out which scale to use.
 - X axis (years) --> scaleLinear (might have been able to use scaleTime?)
 - Y axis (months) --> scaleBand: use for data that is *ordinal* (aka order as in 1st, 2nd, 3rd ...) and *categorical* (example: months, days of the week, ...). 
 - Colors (variance) --> scaleQuantize: transforms continuous data to discrete data. We need the data to be split into chunks, that will put data into groups and associate a color with it.
+
+## Choropleth
