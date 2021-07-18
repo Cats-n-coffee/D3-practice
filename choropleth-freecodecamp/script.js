@@ -42,7 +42,7 @@ async function draw() {
     const colorScale = d3.scaleQuantize()
         .domain(d3.extent(educData, educAccessor))
         .range(d3.schemeBlues[5])
-console.log(d3.schemeBlues[5])
+
     // Tooltip
     const tooltip = d3.select('#tooltip');
     

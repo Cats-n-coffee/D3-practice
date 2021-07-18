@@ -35,3 +35,6 @@ The most challenging part was to figure out which scale to use.
 - Colors (variance) --> scaleQuantize: transforms continuous data to discrete data. We need the data to be split into chunks, that will put data into groups and associate a color with it.
 
 ## Choropleth
+The two challenges from this map were: using geospatial data to draw the map, and merge the datasets.<br>
+Given the counties dataset, it is organized and holds the fields necessary to use `topojson`, and use the `geoPath()` method from D3. (very little knowledge on this)<br>
+Merging the datasets meant matching the `id` from the counties dataset with the `fips` in the education dataset. Once the two numbers were matched, the education data was added to the counties dataset, in order to have one dataset to work with. Merging the two made the accessible all the data using the index.
